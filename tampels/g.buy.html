@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>عروض البيع - جنوب الرياض | كيان القصور</title>
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Cairo',sans-serif;
+      background:url('images/bg2.png') no-repeat center center fixed;
+      background-size:cover;
+      color:#0d1a2d;
+      min-height:100vh;
+    }
+
+    nav{background-color:rgba(0,60,116,.95);padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+    nav ul{list-style:none;display:flex;justify-content:center;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;margin:0;padding:0;scrollbar-width:none}
+    nav ul li{margin:0 15px}
+    nav ul li a{color:#fff;text-decoration:none;font-weight:bold;font-size:16px;transition:color .3s}
+    nav ul li a:hover{color:#ffcc00}
+
+    .hero-section{background:url('images/logo-full.png') no-repeat center center;background-size:contain;display:flex;justify-content:center;align-items:center}
+    .hero-section img{max-width:100%;height:auto}
+
+    .page-title{text-align:center;font-size:34px;font-weight:800;margin:16px 0}
+    .page-subtitle{text-align:center;font-size:18px;opacity:.8;margin-bottom:10px}
+    .cards{width:100%;max-width:920px;margin:10px auto 40px;padding:0 12px}
+
+    .property-card{
+      background:rgba(0,0,0,.4);border-radius:12px;display:flex;justify-content:space-between;align-items:stretch;
+      padding:20px;max-width:800px;margin:16px auto;box-shadow:0 4px 12px rgba(0,0,0,.2);
+      direction:rtl;min-height:180px;outline:none;
+    }
+    h3{font-size:20px;font-weight:700;margin:12px 0;color:#090806; }
+    .property-info{flex:1;padding-right:20px;display:flex;flex-direction:column;justify-content:space-between;color:#fff}
+    .property-info p{margin:5px 0;font-size:16px;color:#eee}
+    .property-info .price{font-weight:700}
+    .price span{color:#ffcc00} /* الرقم فقط باللون الأصفر */
+    .location{color:#66c0ff}
+
+    .property-image{
+      width:220px;
+      height:200px;
+      background:#ddd;
+      border-radius:12px;
+      flex-shrink:0;
+      margin-left:20px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center
+    }
+    .property-image img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+
+    @media (max-width:540px){
+      .property-card{flex-direction:column}
+      .property-image{
+        width:100%;
+        height:250px;
+        margin:0 0 12px 0
+      }
+    }
+
+    .buttons{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+    .buttons a,.buttons button{ text-decoration:none;padding:10px 18px;border-radius:8px;font-size:15px;font-weight:700;display:inline-block;transition:all .2s ease;border:0;cursor:pointer}
+    .btn-call{background:#28a745;color:#fff}.btn-call:hover{background:#218838}
+    .btn-details{background:#007bff;color:#fff}.btn-details:hover{background:#0056b3}
+
+    /* المودال */
+    .modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.7);padding:24px;overflow:auto}
+    .modal__dialog{max-width:920px;margin:auto;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);display:grid;grid-template-columns:1.2fr 1fr;gap:20px;padding:18px;animation:zoomIn .2s ease}
+    .modal__media{border-radius:12px;overflow:hidden;background:#f6f6f6;min-height:260px}
+    .modal__media img{width:100%;height:100%;object-fit:cover;display:block}
+    .modal__body h2{margin:0 0 8px;color:#004e92;font-size:22px}
+    .modal__body p{margin:6px 0;line-height:1.7;color:#333}
+    .modal__price span{color:#ffcc00;font-weight:700} /* الرقم في المودال باللون الأصفر */
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .chip{background:#f0f6ff;color:#0d47a1;border:1px solid #d9e8ff;padding:6px 10px;border-radius:999px;font-size:13px}
+    .modal__actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn-wa{background:#25D366;color:#fff}
+    .btn-close{position:absolute;top:18px;left:24px;background:#fff;color:#333;border:1px solid #e5e7eb;padding:6px 10px;border-radius:8px;font-weight:700;cursor:pointer}
+    .btn-close:hover{background:#f8fafc}
+    @media(max-width:900px){.modal__dialog{grid-template-columns:1fr}}
+    @keyframes zoomIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="about.html">من نحن</a></li>
+      <li><a href="services.html">خدماتنا</a></li>
+      <li><a href="https://www.notion.so/24c382cd612b803c8819f1d72effc932?v=24c382cd612b80828c7d000cbd7eaf92&source=copy_link">عروضنا</a></li>
+      <li><a href="contact.html">تواصل معنا</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero-section">
+    <img src="images/header.jpg" alt="شعار كيان القصور">
+  </section>
+
+  <h1 class="page-title">عروض البيع – جنوب الرياض</h1>
+  <p class="page-subtitle">أفضل العروض المتاحة في جنوب الرياض ·
+  <div class="cards">
+    <!-- بطاقة 1 -->
+   
+    <div class="property-card"
+         data-title="فيلا للبيع في شارع الريحانية    (جنوب الرياض)"
+         data-location="حي بدر "
+         data-desc="التفاصيل /
+
+***درج صالة / تتكون من
+( مجلس + مقلط + صاله + عدد2 دورات مياه + مطبخ )
+( علوي /3غرف توم منها واحده ماستر ودوره مياه )
+(السطح غرفه نوم مع دوره مياه)
+
+***تاون هاوس تتكون من
+( مجلس + مقلط + صاله + عدد2 دورات مياه + مطبخ )
+( علوي /3غرف توم منها واحده ماستر ودوره مياه )
+(السطح غرفه نوم مع دوره مياه). الواجهة شرقية شارع 20م"
+         data-price="830,000 ريال"
+         data-area="230 م²"
+         data-features="تمويل عقاري لجميع القطاعات
+*حلول تمويلية ميسرة
+*التعاون مع البنوك وجميع الجهات المعتمدة التابعة لوزارة النقد
+*حلول تمويلية لمشاكل المديونيات والمتعثرات
+*توفير العقار المناسب لتمويلك   ."
+         data-phone="+966538122338"
+         data-image="images/villa-tellal.png">
+      <div class="property-info">
+        <h3>فيلا للبيع في شارع الريحانية    (جنوب الرياض)</h3>
+        <p>مساحه 230 م² - </p>
+        <p class="price">السعر: <span>830,000 ريال</span></p>
+        <p class="location">الموقع: حي الشفا</p>
+        <div class="buttons">
+          <a href="tel:+966538122338" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/villa-tellal.png" alt="عمارة للبيع - وسط الرياض">
+      </div>
+    </div>
+
+
+  
+    <div class="property-card"
+         data-title="دور للبيع في شارع عثمان الأيوبي (جنوب الرياض)"
+         data-location="حي عكاظ - العجلان"
+         data-desc="التفاصيل /
+مدخل سيارة مع حوش + مجلس رجال مع دورة مياه + مقلط + مطبخ + صالة + مجلس حريم مع مدخل حريم خاص ودورة مياه + 2 غرفة رئيسية مع دورة مياه + 2 غرفة نوم + دورة مياه
+
+
+#مميزات العقار /
+*تشطيب فاخر مع ضمانات على السباكة والكهرباء الداخلية
+*دخول ذكي
+*على بعد 100 متر من الشارع التجاري
+*على بعد 300 متر من مجمع مدارس حكومي
+*قريبة من جميع الخدمات"
+         data-price="790,000 ريال"
+         data-area="225 م²"
+         data-features="*تمويل عقاري لجميع القطاعات
+*حلول تمويلية ميسرة
+*التعاون مع البنوك وجميع الجهات المعتمدة التابعة لوزارة النقد
+*حلول تمويلية لمشاكل المديونيات والمتعثرات
+*توفير العقار المناسب لتمويلك"
+         data-phone="+966538122338"
+         data-image="images/dor790.png">
+      <div class="property-info">
+        <h3>دور للبيع في شارع عثمان الأيوبي (جنوب الرياض)</h3>
+        <p>مساحه 225 م² - 7 غرف  - مطبخ - غرفة كبار سن مع دور علوي</p>
+        <p class="price">السعر: <span>790,000 ريال</span></p>
+        <p class="location">الموقع: حي بدر</p>
+        <div class="buttons">
+          <a href="tel:+966538122338" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/dor790.png" alt=" للبيع دور - جنوب الرياض">
+      </div>
+    </div>
+
+
+    <!-- بطاقة 2 -->
+       <div class="property-card"
+         data-title="شقق فاخرة  للبيع , حي ديراب   (جنوب الرياض)"
+         data-location="حي الحزم "
+         data-desc="مشروع سول SOL
+* يقع المشروع في مدينة الرياض في قلب حي الحزم
+- 3 دقائق عن مجمع الحزم بلازا
+- 2 دقائق عن طريق ديراب
+- على بعد خطوات من الاحتياجات الأساسية أسواق ومدارس
+وحدائق , نوادي رياضية , مراكز صحية ومطاعم ومقاعي , ونحوها
+
+أدوار ومساحات مختلفة تناسبك
+مساحات تبدأ من / 100 متر الى 220 متر
+واسعار تبدأ من / 480 الف الى 550 الف
+
+"
+         data-price="480,000 ريال"
+         data-area="220 م²"
+         data-features="مساحات كبيرة."
+         data-phone="+966538122338"
+         data-image="images/shaqa_derab480.png">
+      <div class="property-info">
+        <h3>شقق فاخرة  للبيع , حي ديراب    (جنوب الرياض)</h3>
+        <p>مشروع سول SOL
+* يقع المشروع في مدينة الرياض في قلب حي الحزم
+- 3 دقائق عن مجمع الحزم بلازا
+- 2 دقائق عن طريق ديراب
+- على بعد خطوات من الاحتياجات الأساسية أسواق ومدارس</p>
+        <p class="price">السعر: <span>480,000 ريال</span></p>
+        <p class="location">الموقع: حي الحزم</p>
+        <div class="buttons">
+          <a href="tel:+966538122338" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/shaqa_derab480.webp" alt="عمارة للبيع - وسط الرياض">
+      </div>
+    </div>
+
+
+
+  
+    <div class="property-card"
+         data-title="دور للبيع في شارع ابراهيم الجاسر, حي عكاظ    (جنوب الرياض)"
+         data-location="حي الشفا "
+         data-desc="دور فاخرة تشطيب راقي
+
+حي عكاظ الشفا
+
+مسطح البناء / 305
+الواجهة / شمال
+الشوارع / 15 متر
+
+التفاصيل /
+الدور الارضي / مجلس مع دورة مياه + مقلط + صالة + غرفة معيشة + مطبخ
+
+الدور الاول / اربع غرف نوم منهم 2 مع دورات مياه رئيسية
+
+الدور الثاني / غرفة خادمة مع دورة مياه + سطح
+."
+         data-price="770,000 ريال"
+         data-area="169 م²"
+         data-features="*تمويل عقاري لجميع القطاعات
+*حلول تمويلية ميسرة
+*التعاون مع البنوك وجميع الجهات المعتمدة التابعة لوزارة النقد
+*حلول تمويلية لمشاكل المديونيات والمتعثرات
+*توفير العقار المناسب لتمويلك"
+         data-phone="+966538122338"
+         data-image="images/dor770.png">
+      <div class="property-info">
+        <h3>للبيع دور ارضي مميز    (جنوب الرياض)</h3>
+        <p>مساحه 305 م² - 4 غرف نوم</p>
+        <p class="price">السعر: <span>770,000 ريال</span></p>
+        <p class="location">الموقع: حي عكاظ</p>
+        <div class="buttons">
+          <a href="tel:+966538122338" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/dor770.png" alt="عمارة للبيع - وسط الرياض">
+      </div>
+    </div>
+
+  
+    <div class="property-card"
+         data-title="للبيع دور بجوار كلية التطبيقية    (جنوب الرياض)"
+         data-location="حي الشفا "
+         data-desc="دور بجوار كلية التطبيقية للبيع في جنوب الرياض، يتكون مجلس و  مقلط و صالة و مطبخ / 3 غرف نوم."
+         data-price="600,000 ريال"
+         data-area="250 م²"
+         data-features="حي أحد - طريق ديراب  - مساحه 250 م² - بجوار كلية التطبيقية يتكون من مجلس و  مقلط و صالة و مطبخ / 3 غرف نوم."
+         data-phone="+966536888406"
+         data-image="images/dor_600.png">
+      <div class="property-info">
+        <h3>للبيع دور بجوار كلية التطبيقية    (جنوب الرياض)</h3>
+        <p> مجلس -  مقلط - صالة - مطبخ - 3 غرف نوم</p>
+        <p class="price">السعر: <span>600,000 ريال</span></p>
+        <p class="location">الموقع: حي الشفا</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/dor_600.png" alt="عمارة للبيع - وسط الرياض">
+      </div>
+    </div>
+
+
+
+    
+    <div class="property-card"
+         data-title="للبيع تاون هاوس    (جنوب الرياض)"
+         data-location="العجلان - بوابة الشفا"
+         data-desc="تاون هاوس للبيع في جنوب الرياض، يتكون مدخل سيارة - من مجلس و  مقلط و صالة و مطبخ و علوي صاله و 4 غرف نوم."
+         data-price="800,000 ريال"
+         data-area="300 م²"
+         data-features="الاسعار تبدأ من 800,000 ريال - مساحه 300 م² -  يتكون مدخل سيارة - من مجلس و  مقلط و صالة و مطبخ / 4 غرف نوم."
+         data-phone="+966536888406"
+         data-image="images/townhouse800.png">
+      <div class="property-info">
+        <h3>للبيع تاون هاوس    (جنوب الرياض)</h3>
+        <p> مدخل سيارة - من مجلس و  مقلط و صالة و مطبخ و علوي صاله و 4 غرف نوم</p>
+        <p class="price">السعر: <span>800,000 ريال</span></p>
+        <p class="location">الموقع: حي الشفا</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/townhouse800.png" alt="عمارة للبيع - وسط الرياض">
+      </div>
+    </div>
+
+
+        
+    <div class="property-card"
+         data-title="للبيع  فيلا دبلكس    (جنوب الرياض)"
+         data-location="مخطط المزيني   "
+         data-desc="  الدور الارضي - مجلس مع دورة مياة - مقلط - صالة مع دورة مياة - مطبخ - غرفة كبار سن مع دورة مياة / الدور الثاني 4 غرف - مع 3 دورة مياة / الدور الأخير غرفة شغاله مع دورة مياة - صالة - 2 سطح."
+         data-price="1,500,000 ريال"
+         data-area="250 م²"
+         data-features="الدور الأرضي - مجلس مع دورة مياه - مقلط - صالة مع دورة مياه - مطبخ - غرفة كبار سن مع دورة مياه / الدور الثاني 4 غرف - مع 3 دورة مياه / الدور الأخير غرفة شغالة مع دورة مياه - صالة - 2 سطح."
+         data-phone="+966536888406"
+         data-image="images/villa_mzeny.png">
+      <div class="property-info">
+        <h3>للبيع  فيلا دبلكس    (جنوب الرياض)</h3>
+        <p>  الدور الارضي - مجلس مع دورة مياة - مقلط - صالة مع دورة مياة - مطبخ - غرفة كبار سن مع دورة مياة / الدور الثاني 4 غرف - مع 3 دورة مياة / الدور الأخير غرفة شغاله مع دورة مياة - صالة - 2 سطح.</p>
+        <p class="price">السعر: <span>1,500,000 ريال</span></p>
+        <p class="location">الموقع: حي الشفا</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/villa_mzeny.png" alt="عمارة للبيع - وسط الرياض">
+      </div>
+    </div>
+
+
+    
+
+
+  </div>
+  
+
+  <!-- المودال -->
+  <div id="detailsModal" class="modal" aria-hidden="true">
+    <button class="btn-close" type="button" aria-label="إغلاق">✕ إغلاق</button>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <div class="modal__media"><img id="mImage" src="" alt=""></div>
+      <div class="modal__body">
+        <h2 id="mTitle">—</h2>
+        <p><strong>📍 الموقع:</strong> <span id="mLocation">—</span></p>
+        <p><strong>📐 المساحة:</strong> <span id="mArea">—</span></p>
+        <p><strong>الوصف:</strong> <span id="mDesc">—</span></p>
+        <div class="chips" id="mFeatures"></div>
+        <p class="modal__price"><strong>السعر:</strong> <span id="mPrice">—</span></p>
+        <div class="modal__actions">
+          <a id="mCall" class="buttons btn-call" href="#" target="_blank">📞 اتصال</a>
+          <a id="mWa" class="buttons btn-wa" href="#" target="_blank">💬 واتساب</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const modal=document.getElementById('detailsModal');
+      const img=document.getElementById('mImage');
+      const title=document.getElementById('mTitle');
+      const loc=document.getElementById('mLocation');
+      const area=document.getElementById('mArea');
+      const desc=document.getElementById('mDesc');
+      const price=document.getElementById('mPrice');
+      const chips=document.getElementById('mFeatures');
+      const call=document.getElementById('mCall');
+      const wa=document.getElementById('mWa');
+
+      function openFromCard(card){
+        const d=card.dataset;
+        title.textContent=d.title||'—';
+        loc.textContent=d.location||'—';
+        area.textContent=d.area||'—';
+        desc.textContent=d.desc||'—';
+        price.textContent=d.price||'—';
+        img.src=d.image||''; img.alt=d.title||'صورة العقار';
+        chips.innerHTML='';
+        (d.features||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(f=>{
+          const span=document.createElement('span'); span.className='chip'; span.textContent=f; chips.appendChild(span);
+        });
+        const phone=(d.phone||'').replace(/\s+/g,'');
+        if(phone){ call.href=`tel:${phone}`; wa.href=`https://wa.me/${phone.replace('+','')}`; call.style.display='inline-block'; wa.style.display='inline-block';}
+        else{ call.style.display='none'; wa.style.display='none';}
+        modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      }
+      function closeModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+      document.querySelectorAll('.property-card .btn-details').forEach(btn=>{
+        btn.addEventListener('click',e=>{ e.preventDefault(); const card=btn.closest('.property-card'); if(card) openFromCard(card); });
+      });
+      document.addEventListener('click',e=>{ if(e.target.classList.contains('btn-close') || e.target.classList.contains('modal')) closeModal(); });
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+    })();
+  </script>
+</body>
+</html>

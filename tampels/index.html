@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>كيان القصور العقارية</title>
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Cairo',sans-serif;
+      background:url('images/bg2.png') no-repeat center center fixed;
+      background-size:cover;
+      color:#0d1a2d;min-height:100vh;
+    }
+
+    /* شريط التنقل */
+    nav{background-color:rgba(0,60,116,.95);padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+    nav ul{list-style:none;display:flex;justify-content:center;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;margin:0;padding:0;scrollbar-width:none}
+    nav ul li{margin:0 15px}
+    nav ul li a{color:#fff;text-decoration:none;font-weight:bold;font-size:16px;transition:color .3s}
+    nav ul li a:hover{color:#ffcc00}
+
+    /* الشعار */
+    .hero-section{display:flex;justify-content:center;align-items:center}
+    .hero-section img{max-width:100%;height:auto}
+    .site-title{text-align:center;font-size:34px;font-weight:bold;margin:20px 0}
+
+    /* شريط الأزرار العلوية (ثابت المستوى) */
+    .main-buttons{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(160px,1fr));
+      gap:16px;
+      align-items:stretch;
+      max-width:1200px;
+      margin:0 auto 30px;
+      padding:0 16px;
+    }
+    @media (max-width:1200px){.main-buttons{grid-template-columns:repeat(4,minmax(160px,1fr))}}
+    @media (max-width:992px){.main-buttons{grid-template-columns:repeat(3,minmax(160px,1fr))}}
+    @media (max-width:768px){.main-buttons{grid-template-columns:repeat(2,minmax(140px,1fr))}}
+    @media (max-width:420px){.main-buttons{grid-template-columns:1fr}}
+
+    /* نمط الأزرار الموحد */
+    .btn, .region-btn, .btn-google-review, .open-btn{
+      display:flex;align-items:center;justify-content:center;
+      height:56px;padding:0 18px;border-radius:12px;border:0;cursor:pointer;
+      font-weight:700;font-size:16px;text-decoration:none;transition:.15s ease;
+      box-shadow:0 6px 16px rgba(0,0,0,.12);
+      background:#0d1a2d;color:#fff;
+    }
+    .btn:hover,.region-btn:hover,.btn-google-review:hover,.open-btn:hover{transform:translateY(-2px);opacity:.95}
+    .region-buttons{display:flex;gap:14px}
+    .region-btn{flex:1}
+
+    /* القائمة الفرعية بيع/إيجار */
+    .region-submenu{
+      position:absolute;display:none;padding:10px;gap:10px;
+      background:rgba(0,60,116,.98);border-radius:14px;z-index:9999;
+      box-shadow:0 10px 25px rgba(0,0,0,.15);white-space:nowrap
+    }
+    .region-submenu.show{display:inline-flex;align-items:center}
+    .region-submenu a{
+      display:inline-block;min-width:88px;text-align:center;text-decoration:none;
+      padding:10px 16px;border-radius:12px;background:#0d1a2d;color:#fff;font-weight:700
+    }
+    .region-submenu a:hover{opacity:.9}
+
+    /* مودال السوشيال (أسماء فريدة لمنع التعارض) */
+    .social-modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.5)}
+    .social-modal__content{
+      background:#fff;margin:15% auto;padding:20px;border-radius:10px;width:320px;text-align:center;position:relative
+    }
+    .social-modal__close{position:absolute;top:8px;left:10px;color:#d00;font-size:20px;cursor:pointer}
+    .social-btn{display:block;margin:10px auto;padding:10px;font-size:16px;text-decoration:none;border-radius:8px;background:#f1f1f1;color:#333;transition:.2s}
+    .social-btn i{margin-left:8px}
+    .social-btn:hover{background:#e6e6e6}
+
+    /* فيديو (مقاس ثابت) */
+   /* حاوية الفيديو: تتمركز وتتمدد مع عرض الصفحة */
+.video-section{
+  background-color: rgba(255,255,255,.1);
+  margin: 20px auto;
+  width: min(1200px, 95vw);  /* يتمدّد حتى 1200px أو 95% من عرض الشاشة */
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* إطار بنسبة أبعاد ثابتة 16:9 */
+.video-aspect{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;      /* يحافظ على النسبة أثناء التكبير/التصغير */
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* الفيديو يملأ الإطار استجابةً لحجمه */
+.video-aspect video{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;        /* يظهر كامل الإطار بدون قصّ */
+  display: block;
+}
+
+
+        .property-card{
+      background:rgba(0,0,0,.4);border-radius:12px;display:flex;justify-content:space-between;align-items:stretch;
+      padding:20px;max-width:800px;margin:16px auto;box-shadow:0 4px 12px rgba(0,0,0,.2);
+      direction:rtl;min-height:180px;outline:none;
+    }
+    h3{font-size:20px;font-weight:700;margin:12px 0;color:#090806; }
+    .property-info{flex:1;padding-right:20px;display:flex;flex-direction:column;justify-content:space-between;color:#fff}
+    .property-info p{margin:5px 0;font-size:16px;color:#eee}
+    .property-info .price{font-weight:700}
+    .price span{color:#ffcc00} /* الرقم فقط باللون الأصفر */
+    .location{color:#66c0ff}
+
+        .property-image{
+      width:220px;
+      height: 200px;
+      background:#ddd;
+      border-radius:12px;
+      flex-shrink:0;
+      margin-left:20px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center
+    }
+    .property-image img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+
+    @media (max-width:540px){
+      .property-card{
+        flex-direction: column;
+      }
+    }
+    @media (max-width:540px){
+      .property-card{flex-direction:column}
+      .property-image{
+        width:100%;
+        height: 250px;
+        margin:0 0 12px 0
+      }
+    }
+    .price{color:#ffcc00;font-weight:bold;font-size:18px}
+    .location{color:#66c0ff}
+    .buttons{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+    .buttons a,.buttons button{text-decoration:none;padding:10px 18px;border-radius:8px;font-size:15px;font-weight:bold;display:inline-block;transition:all .2s ease;border:0;cursor:pointer}
+    .btn-call{background-color:#28a745;color:#fff}
+    .btn-call:hover{background-color:#218838}
+    .btn-details{background-color:#007bff;color:#fff}
+    .btn-details:hover{background-color:#0056b3}
+
+    /* مودال تفاصيل العقار */
+    .modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.7);padding:24px;overflow:auto}
+    .modal__dialog{max-width:920px;margin:auto;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);display:grid;grid-template-columns:1.2fr 1fr;gap:20px;padding:18px;animation:zoomIn .2s ease}
+    .modal__media{border-radius:12px;overflow:hidden;background:#f6f6f6;min-height:260px}
+    .modal__media img{width:100%;height:100%;object-fit:cover;display:block}
+    .modal__body h2{margin:0 0 8px;color:#004e92;font-size:22px}
+    .modal__body p{margin:6px 0;line-height:1.7;color:#333}
+    .modal__price span{color:#ffcc00;font-weight:700} /* الرقم في المودال باللون الأصفر */
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .chip{background:#f0f6ff;color:#0d47a1;border:1px solid #d9e8ff;padding:6px 10px;border-radius:999px;font-size:13px}
+    .modal__actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn-wa{background:#25D366;color:#fff}
+    .btn-close{position:absolute;top:18px;left:24px;background:#fff;color:#333;border:1px solid #e5e7eb;padding:6px 10px;border-radius:8px;font-weight:700;cursor:pointer}
+    .btn-close:hover{background:#f8fafc}
+    @media(max-width:900px){.modal__dialog{grid-template-columns:1fr}}
+    @keyframes zoomIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+  </style>
+</head>
+<body>
+
+  <!-- شريط التنقل -->
+  <nav>
+    <ul>
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="about.html">من نحن</a></li>
+      <li><a href="services.html">خدماتنا</a></li>
+      <li><a href="https://www.notion.so/24c382cd612b803c8819f1d72effc932?v=24c382cd612b80828c7d000cbd7eaf92&source=copy_link" target="_blank">عروضنا</a></li>
+      <li><a href="contact.html">تواصل معنا</a></li>
+    </ul>
+  </nav>
+
+  <!-- الشعار -->
+  <section class="hero-section">
+    <img src="images/header.jpg" alt="شعار كيان القصور">
+  </section>
+
+  <!-- عنوان الموقع -->
+  <h1 class="site-title">كيان القصور للعقارات</h1>
+
+  <!-- أزرار تنقل سريع (كلها على مستوى واحد) -->
+  <div class="main-buttons">
+    <div class="region-buttons">
+      <button type="button" class="region-btn" data-region="جنوب الرياض">جنوب الرياض</button>
+      <button type="button" class="region-btn" data-region="وسط الرياض">وسط الرياض</button>
+    </div>
+
+    <a class="btn" href="add.html">أضف إعلانك</a>
+
+    <a class="btn-google-review" href="https://search.google.com/local/writereview?placeid=ChIJhQThJpcFLz4RqsZf-u4eVtg" target="_blank" rel="noopener">
+      ⭐ قيّمنا على Google
+    </a>
+
+    <button class="open-btn" type="button" onclick="document.getElementById('socialModal').style.display='block'">
+      🌐 مواقع التواصل الاجتماعي
+    </button>
+  </div>
+
+  <!-- مودال مواقع التواصل -->
+  <div id="socialModal" class="social-modal" aria-hidden="true">
+    <div class="social-modal__content" role="dialog" aria-modal="true">
+      <span class="social-modal__close" onclick="document.getElementById('socialModal').style.display='none'">&times;</span>
+      <h3 style="margin-bottom:8px">اختر موقعك</h3>
+
+      <a class="social-btn" href="https://www.instagram.com/kayanalqusur/" target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i> انستغرام
+      </a>
+      <a class="social-btn" href="https://x.com/KayanAlqusur?t=KohxDl6CIDWUPE_QM30gww&s=08" target="_blank" rel="noopener">
+        <i class="fa-brands fa-x-twitter"></i> منصة X (تويتر)
+      </a>
+      <a class="social-btn" href="https://www.facebook.com/profile.php?id=61579441001798" target="_blank" rel="noopener">
+        <i class="fa-brands fa-facebook"></i> فيسبوك
+      </a>
+      <a class="social-btn" href="https://www.tiktok.com/@kayanalqusur0" target="_blank" rel="noopener">
+        <i class="fa-brands fa-tiktok"></i> تيك توك
+      </a>
+      <a class="social-btn" href="https://www.youtube.com/@kayan-alqusur" target="_blank" rel="noopener">
+        <i class="fa-brands fa-youtube"></i> يوتيوب
+      </a>
+      <a class="social-btn" href="https://wa.me/966536888406" target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp"></i> واتساب
+      </a>
+<a class="social-btn" href="https://www.snapchat.com/add/kayanalqusur?share_id=Z3GLoYah3oU&locale=en-SA" target="_blank" rel="noopener">
+        <i class="fa-brands fa-snapchat"></i> سناب شات
+      </a>
+    </div>
+  </div>
+
+  <div class="video-section">
+  <div class="video-aspect">
+    <video controls>
+      <source src="video.mp4" type="video/mp4">
+      متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+  </div>
+</div>
+
+
+  <!-- عنوان قسم العروض -->
+  <section class="hero-section">
+    <h2 style="color:#0d1a2d;font-size:28px;margin:10px 0;">عروض خاطفة</h2>
+  </section>
+
+  <!-- كرت العقار 1 -->
+
+    <div class="property-card"
+         data-title=" للإيجار دور ارضي (وسط الرياض)"
+         data-location=" حي الحمراء"
+         data-desc="مدخل خاص - مدخلين للعقار - مجلس مع دورة مياة - صالة - مطبخ - 3 غرف نوم - دورة مياة"
+         data-price="90,000 ريال"
+         data-area="—"
+        data-features="مساحات كبيرة"
+         data-phone="+966536888406"
+         data-image="images/dor_ardy_hamra.png">
+      <div class="property-info">
+                        <h3>للإيجار دور ارضي (وسط الرياض)</h3>
+
+        <p class="description">مدخل خاص - مدخلين للعقار - مجلس مع دورة مياة - صالة - مطبخ - 3 غرف نوم - دورة مياة</p>
+        <p class="price">السعر: <span>90,000 ريال</span></p>
+        <p class="location">الموقع: حي الحمراء</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/dor_ardy_hamra.png" alt="دور للإيجار - حي الحمراء">
+      </div>
+    </div>
+
+<div class="property-card"
+         data-title="للبيع فيلا عمرها 35 سنه (وسط الرياض)"
+         data-location="حي الملز "
+         data-desc="فيلا فاخرة للبيع في وسط الرياض، تتكون من 10 غرف نوم و4 حمامات، مع حوش واسع يتسع لخمسة سيارات."
+         data-price="3,500,000 ريال"
+         data-area="507 م²"
+         data-features="مساحه 507 م² - 10 غرف نوم - 4 حمامات - حوش و باكيه تتسع ل خمس سيارات"
+         data-phone="+966536888406"
+         data-image="images/villa35sana.png">
+      <div class="property-info">
+        <h3>للبيع فيلا عمرها 35 سنه</h3>
+        <p>مساحه 507 م² - 10 غرف نوم - 4 حمامات - حوش و باكيه تتسع ل خمس سيارات</p>
+        <p class="price">السعر: <span>3,500,000 ريال</span></p>
+        <p class="location">الموقع: حي الملز</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/villa35sana.png" alt="عمارة للبيع - وسط الرياض">
+      </div>
+    </div>
+  </div>
+
+  <!-- كرت العقار 2 -->
+
+     <div class="property-card"
+         data-title=" للإيجار عمارة (وسط الرياض)"
+         data-location=" حي جرير"
+         data-desc="تتكون من - 4 شقق - كل شقة 3 غرف - مطبخ - 2 دورات مياة  - "
+         data-price="250,000 ريال"
+         data-area="—"
+        data-features=" السطح يتكون من 3 غرف - مطبخ - 3 دورات مياة - مطبخ راكب"
+         data-phone="+966536888406"
+         data-image="images/omarajarir.png">
+      <div class="property-info">
+                <h3>للإيجار عمارة (وسط الرياض)</h3>
+        <p class="description">تتكون من - 4 شقق - كل شقة 3 غرف - مطبخ - 2 دورات مياة  - </p>
+        <p class="price">السعر: <span>250,000 ريال</span></p>
+        <p class="location">الموقع: حي جرير</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/omarajarir.png" alt="دور للإيجار - حي الربوة">
+      </div>
+    </div>
+
+    <div class="property-card"
+         data-title="للبيع تاون هاوس أمامي    (جنوب الرياض)"
+         data-location="حي الشفا "
+         data-desc="تاون هاوس أمامي للبيع في جنوب الرياض، يتكون مجلس و مقلط و صالة و مطبخ و غرفة كبار سن / العلوى 3 غرف نوم."
+         data-price="780,000 ريال"
+         data-area="350 م²"
+         data-features="مخطط السعيدان - مساحه 350 م² - أمامي يتكون من مجلس و مقلط و صالة و مطبخ و غرفة كبار سن / العلوى 3 غرف نوم."
+         data-phone="+966536888406"
+         data-image="images/townhouse_amamy.png">
+      <div class="property-info">
+        <h3>للبيع تاون هاوس أمامي    (جنوب الرياض)</h3>
+        <p>مساحه 350 م² - 5 غرف  - مطبخ - غرفة كبار سن مع دور علوي</p>
+        <p class="price">السعر: <span>780,000 ريال</span></p>
+        <p class="location">الموقع: حي الشفا</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/townhouse_amamy.png" alt="عمارة للبيع - وسط الرياض">
+      </div>
+    </div>
+  </div>
+
+           <div class="property-card"
+         data-title=" للإيجار شقة رقم 8 (وسط الرياض)"
+         data-location=" حي جرير"
+         data-desc=" شقة 8 / غرفة - حمام - مطبخ "
+         data-price="26,000 ريال"
+         data-area="—"
+        data-features="مكيفات راكبه - مطبخ راكب"
+         data-phone="+966536888406"
+         data-image="images/shaqa8.png">
+      <div class="property-info">
+                <h3>للإيجار شقة رقم 8 (وسط الرياض)</h3>
+        <p class="description">شقة 8 / غرفة - حمام - مطبخ</p>
+        <p class="price">السعر: <span>26,000 ريال</span></p>
+        <p class="location">الموقع: حي جرير</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/shaqa8.png" alt="دور للإيجار - حي الربوة">
+      </div>
+    </div>
+
+  <!-- مودال تفاصيل العقار -->
+  <div id="detailsModal" class="modal" aria-hidden="true">
+    <button class="btn-close" type="button" aria-label="إغلاق">✕ إغلاق</button>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <div class="modal__media">
+        <img id="mImage" src="" alt="">
+      </div>
+      <div class="modal__body">
+        <h2 id="mTitle">—</h2>
+        <p><strong>📍 الموقع:</strong> <span id="mLocation">—</span></p>
+        <p><strong>📐 المساحة:</strong> <span id="mArea">—</span></p>
+        <p><strong>الوصف:</strong> <span id="mDesc">—</span></p>
+        <div class="chips" id="mFeatures"></div>
+        <p class="modal__price"><strong>السعر:</strong> <span id="mPrice">—</span></p>
+        <div class="modal__actions">
+          <a id="mCall" class="buttons btn-call" href="#" target="_blank">📞 اتصال</a>
+          <a id="mWa" class="buttons btn-wa" href="#" target="_blank">💬 واتساب</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- سكربت مودال التفاصيل -->
+  <script>
+    (function(){
+      const modal=document.getElementById('detailsModal');
+      const img=document.getElementById('mImage');
+      const title=document.getElementById('mTitle');
+      const loc=document.getElementById('mLocation');
+      const area=document.getElementById('mArea');
+      const desc=document.getElementById('mDesc');
+      const price=document.getElementById('mPrice');
+      const chips=document.getElementById('mFeatures');
+      const call=document.getElementById('mCall');
+      const wa=document.getElementById('mWa');
+
+      function openFromCard(card){
+        const d=card.dataset;
+        title.textContent=d.title||'—';
+        loc.textContent=d.location||'—';
+        area.textContent=d.area||'—';
+        desc.textContent=d.desc||'—';
+        price.textContent=d.price||'—';
+        img.src=d.image||''; img.alt=d.title||'صورة العقار';
+        chips.innerHTML='';
+        (d.features||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(f=>{
+          const span=document.createElement('span'); span.className='chip'; span.textContent=f; chips.appendChild(span);
+        });
+        const phone=(d.phone||'').replace(/\s+/g,'');
+        if(phone){
+          call.href=`tel:${phone}`;
+          wa.href=`https://wa.me/${phone.replace('+','')}`;
+          call.style.display='inline-block'; wa.style.display='inline-block';
+        }else{
+          call.style.display='none'; wa.style.display='none';
+        }
+        modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      }
+      function closeModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+
+      document.querySelectorAll('.property-card .btn-details').forEach(btn=>{
+        btn.addEventListener('click',e=>{ e.preventDefault(); const card=btn.closest('.property-card'); if(card) openFromCard(card); });
+      });
+      document.querySelector('.btn-close').addEventListener('click',closeModal);
+      modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+    })();
+  </script>
+
+  <!-- سكربت القائمة الفرعية (بيع/إيجار) -->
+  <script>
+  const submenu = document.querySelector('.region-submenu') || (() => {
+    const el = document.createElement('div');
+    el.className = 'region-submenu';
+    el.innerHTML = `<a id="sellLink">بيع</a><a id="rentLink">إيجار</a>`;
+    document.body.appendChild(el);
+    return el;
+  })();
+
+  function showSubmenu(btn){
+    // 1) حدّث الروابط حسب الزر
+    const region = btn.dataset.region;
+    let buyPage = '', rentPage = '';
+    if (region === 'وسط الرياض'){ buyPage = 'w.buy.html'; rentPage = 'w.rent.html'; }
+    else if (region === 'جنوب الرياض'){ buyPage = 'g.buy.html'; rentPage = 'g.rent.html'; }
+    else { buyPage = `buy.html?region=${encodeURIComponent(region)}`;
+           rentPage = `rent.html?region=${encodeURIComponent(region)}`; }
+    document.getElementById('sellLink').href = buyPage;
+    document.getElementById('rentLink').href = rentPage;
+
+    // 2) إظهار مؤقتًا لمعرفة المقاس
+    submenu.style.visibility = 'hidden';
+    submenu.classList.add('show');
+
+    const rect = btn.getBoundingClientRect();
+    const vw   = window.innerWidth;
+    const vh   = window.innerHeight;
+
+    // أبعاد القائمة بعد ظهورها
+    const sw = submenu.offsetWidth;
+    const sh = submenu.offsetHeight;
+
+    // 3) احسب الموضع المبدئي أسفل الزر (منتصفه)
+    let left = window.scrollX + rect.left + (rect.width / 2) - (sw / 2);
+    let top  = window.scrollY + rect.bottom + 8;
+
+    // 4) احصرها أفقياً داخل حدود الشاشة (8px هامش)
+    const minLeft = window.scrollX + 8;
+    const maxLeft = window.scrollX + vw - sw - 8;
+    left = Math.min(Math.max(left, minLeft), Math.max(minLeft, maxLeft));
+
+    // 5) لو ما فيه مساحة تحت، اعرضها فوق الزر
+    const bottomOverflow = (top + sh) > (window.scrollY + vh - 8);
+    if (bottomOverflow){
+      top = window.scrollY + rect.top - sh - 8;
+      // لو برضه خرجت لفوق، ثبّتها داخل الشاشة
+      if (top < window.scrollY + 8) top = window.scrollY + 8;
+    }
+
+    // 6) ثبّت الإحداثيات
+    submenu.style.left = `${left}px`;
+    submenu.style.top  = `${top}px`;
+    submenu.style.visibility = 'visible';
+  }
+
+  // ربط الأزرار
+  document.querySelectorAll('.region-btn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      showSubmenu(btn);
+    });
+  });
+
+  // إغلاق القائمة عند الضغط خارجها/التمرير/تغيير الحجم
+  document.addEventListener('click', (e)=>{
+    if (!submenu.contains(e.target) && !e.target.closest('.region-btn')) {
+      submenu.classList.remove('show');
+    }
+  });
+  window.addEventListener('scroll', ()=> submenu.classList.remove('show'));
+  window.addEventListener('resize', ()=> submenu.classList.remove('show'));
+</script>
+
+
+  <!-- إغلاق مودال السوشيال بالنقر خارج المحتوى أو ESC -->
+  <script>
+    (function(){
+      const sm=document.getElementById('socialModal');
+      sm.addEventListener('click',e=>{ if(e.target===sm) sm.style.display='none'; });
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape') sm.style.display='none'; });
+    })();
+  </script>
+
+</body>
+</html>

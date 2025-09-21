@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>عروض الإيجار - وسط الرياض | كيان القصور</title>
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Cairo',sans-serif;
+      background:url('images/bg2.png') no-repeat center center fixed;
+      background-size:cover;
+      color:#0d1a2d;
+      min-height:100vh;
+    }
+
+
+
+    nav{background-color:rgba(0,60,116,.95);padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+    nav ul{list-style:none;display:flex;justify-content:center;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;margin:0;padding:0;scrollbar-width:none}
+    nav ul li{margin:0 15px}
+    nav ul li a{color:#fff;text-decoration:none;font-weight:bold;font-size:16px;transition:color .3s}
+    nav ul li a:hover{color:#ffcc00}
+
+    .hero-section{background:url('images/logo-full.png') no-repeat center center;background-size:contain;display:flex;justify-content:center;align-items:center}
+    .hero-section img{max-width:100%;height:auto}
+
+    .page-title{text-align:center;font-size:34px;font-weight:800;margin:16px 0}
+    .page-subtitle{text-align:center;font-size:18px;opacity:.8;margin-bottom:10px}
+    .cards{width:100%;max-width:920px;margin:10px auto 40px;padding:0 12px}
+
+    .property-card{
+      background:rgba(0,0,0,.4);border-radius:12px;display:flex;justify-content:space-between;align-items:stretch;
+      padding:20px;max-width:800px;margin:16px auto;box-shadow:0 4px 12px rgba(0,0,0,.2);
+      direction:rtl;min-height:180px;outline:none;
+    }
+    h3{font-size:20px;font-weight:700;margin:12px 0;color:#090806; }
+    .property-info{flex:1;padding-right:20px;display:flex;flex-direction:column;justify-content:space-between;color:#fff}
+    .property-info p{margin:5px 0;font-size:16px;color:#eee}
+    .property-info .price{font-weight:700}
+    .price span{color:#ffcc00} /* الرقم فقط باللون الأصفر */
+    .location{color:#66c0ff}
+
+    .property-image{
+      width:220px;
+      height:200px;
+      background:#ddd;
+      border-radius:12px;
+      flex-shrink:0;
+      margin-left:20px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center
+    }
+    .property-image img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+
+    @media (max-width:540px){
+      .property-card{flex-direction:column}
+      .property-image{
+        width:100%;
+        height:250px;
+        margin:0 0 12px 0
+      }
+    }
+
+    .buttons{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+    .buttons a,.buttons button{ text-decoration:none;padding:10px 18px;border-radius:8px;font-size:15px;font-weight:700;display:inline-block;transition:all .2s ease;border:0;cursor:pointer}
+    .btn-call{background:#28a745;color:#fff}.btn-call:hover{background:#218838}
+    .btn-details{background:#007bff;color:#fff}.btn-details:hover{background:#0056b3}
+
+    /* المودال */
+    .modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.7);padding:24px;overflow:auto}
+    .modal__dialog{max-width:920px;margin:auto;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);display:grid;grid-template-columns:1.2fr 1fr;gap:20px;padding:18px;animation:zoomIn .2s ease}
+    .modal__media{border-radius:12px;overflow:hidden;background:#f6f6f6;min-height:260px}
+    .modal__media img{width:100%;height:100%;object-fit:cover;display:block}
+    .modal__body h2{margin:0 0 8px;color:#004e92;font-size:22px}
+    .modal__body p{margin:6px 0;line-height:1.7;color:#333}
+    .modal__price span{color:#ffcc00;font-weight:700} /* الرقم في المودال باللون الأصفر */
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .chip{background:#f0f6ff;color:#0d47a1;border:1px solid #d9e8ff;padding:6px 10px;border-radius:999px;font-size:13px}
+    .modal__actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn-wa{background:#25D366;color:#fff}
+    .btn-close{position:absolute;top:18px;left:24px;background:#fff;color:#333;border:1px solid #e5e7eb;padding:6px 10px;border-radius:8px;font-weight:700;cursor:pointer}
+    .btn-close:hover{background:#f8fafc}
+    @media(max-width:900px){.modal__dialog{grid-template-columns:1fr}}
+    @keyframes zoomIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+  </style>
+</head>
+<body>
+
+  
+  <nav>
+    <ul>
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="about.html">من نحن</a></li>
+      <li><a href="services.html">خدماتنا</a></li>
+      <li><a href="https://www.notion.so/24c382cd612b803c8819f1d72effc932?v=24c382cd612b80828c7d000cbd7eaf92&source=copy_link">عروضنا</a></li>
+      <li><a href="contact.html">تواصل معنا</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero-section">
+    <img src="images/header.jpg" alt="شعار كيان القصور">
+  </section>
+
+  <h1 class="page-title">عروض الإيجار – وسط الرياض</h1>
+  <p class="page-subtitle">أفضل العروض المتاحة</p>
+
+  <div class="cards">
+    <!-- بطاقة 1 -->
+    <div class="property-card"
+         data-title=" للإيجار دور ارضي (وسط الرياض)"
+         data-location=" حي الحمراء"
+         data-desc="مدخل خاص - مدخلين للعقار - مجلس مع دورة مياة - صالة - مطبخ - 3 غرف نوم - دورة مياة"
+         data-price="90,000 ريال"
+         data-area="—"
+        data-features="مساحات كبيرة"
+         data-phone="+966536888406"
+         data-image="images/dor_ardy_hamra.png">
+      <div class="property-info">
+                        <h3>للإيجار دور ارضي (وسط الرياض)</h3>
+
+        <p class="description">مدخل خاص - مدخلين للعقار - مجلس مع دورة مياة - صالة - مطبخ - 3 غرف نوم - دورة مياة</p>
+        <p class="price">السعر: <span>90,000 ريال</span></p>
+        <p class="location">الموقع: حي الحمراء</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/dor_ardy_hamra.png" alt="دور للإيجار - حي الحمراء">
+      </div>
+    </div>
+
+  
+    
+     <div class="property-card"
+         data-title=" للإيجار دور ارضي (وسط الرياض)"
+         data-location=" حي الربوة"
+         data-desc="مجلس - 5 غرف - ملحق خرجي - مقلط - صالة - مطبخ"
+         data-price="100,000 ريال"
+         data-area="—"
+        data-features="مساحات كبيرة"
+         data-phone="+966536888406"
+         data-image="images/doralrbya.png">
+      <div class="property-info">
+                        <h3>للإيجار دور ارضي (وسط الرياض)</h3>
+
+        <p class="description">مجلس - 5 غرف - ملحق خرجي - مقلط - صالة - مطبخ</p>
+        <p class="price">السعر: <span>100,000 ريال</span></p>
+        <p class="location">الموقع: حي الربوة</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/doralrbya.png" alt="دور للإيجار - حي الربوة">
+      </div>
+    </div>
+
+
+
+
+        <div class="property-card"
+         data-title=" للإيجار دور علوي (وسط الرياض)"
+         data-location=" حي الحمراء"
+         data-desc="    مجلس مع دورة مياة - صالة - مطبخ - 3 غرف نوم - دورة مياة"
+         data-price="85,000 ريال"
+         data-area="—"
+        data-features="مساحات كبيرة"
+         data-phone="+966536888406"
+         data-image="images/dor_ardy_hamra2.png">
+      <div class="property-info">
+                        <h3>للإيجار دور علوي (وسط الرياض)</h3>
+
+        <p class="description">    مجلس مع دورة مياة - صالة - مطبخ - 3 غرف نوم - دورة مياة</p>
+        <p class="price">السعر: <span>85,000 ريال</span></p>
+        <p class="location">الموقع: حي الحمراء</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/dor_ardy_hamra2.png" alt="دور للإيجار - حي الحمراء">
+      </div>
+    </div>
+
+     
+    
+    
+       <div class="property-card"
+         data-title=" للإيجار شقة رقم 8 (وسط الرياض)"
+         data-location=" حي جرير"
+         data-desc=" شقة 8 / غرفة - حمام - مطبخ "
+         data-price="26,000 ريال"
+         data-area="—"
+        data-features="مكيفات راكبه - مطبخ راكب"
+         data-phone="+966536888406"
+         data-image="images/shaqa8.png">
+      <div class="property-info">
+                <h3>للإيجار شقة رقم 8 (وسط الرياض)</h3>
+        <p class="description">شقة 8 / غرفة - حمام - مطبخ</p>
+        <p class="price">السعر: <span>26,000 ريال</span></p>
+        <p class="location">الموقع: حي جرير</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/shaqa8.png" alt="دور للإيجار - حي الربوة">
+      </div>
+    </div>
+
+      
+           <div class="property-card"
+         data-title=" للإيجار فيلا دور ونصف  (وسط الرياض)"
+         data-location=" حي الملز"
+         data-desc="مدخل سيارة - ملحق مع دورة مياة- صالة - مطبخ - مستودع - 2 دورة مياة - 4 غرف نوم - غرفة غسيل - "
+         data-price="120,000 ريال"
+         data-area="—"
+        data-features="الفيلا مجدده بالكامل"
+         data-phone="+966536888406"
+         data-image="images/villa_dor_nos.png">
+      <div class="property-info">
+                <h3>للإيجار فيلا دور ونصف  (وسط الرياض)</h3>
+        <p class="description">مدخل سيارة - ملحق مع دورة مياة- صالة - مطبخ - مستودع - 2 دورة مياة - 4 غرف نوم - غرفة غسيل - </p>
+        <p class="price">السعر: <span>120,000 ريال</span></p>
+        <p class="location">الموقع: حي الملز</p>
+        <div class="buttons">
+          <a href="tel:+966536888406" class="btn-call">📞 اتصال</a>
+          <button class="btn-details">📋 تفاصيل</button>
+        </div>
+      </div>
+      <div class="property-image">
+        <img src="images/villa_dor_nos.png" alt="فيلا للإيجار - حي الملز">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- المودال -->
+  <div id="detailsModal" class="modal" aria-hidden="true">
+    <button class="btn-close" type="button" aria-label="إغلاق">✕ إغلاق</button>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <div class="modal__media"><img id="mImage" src="" alt=""></div>
+      <div class="modal__body">
+        <h2 id="mTitle">—</h2>
+        <p><strong>📍 الموقع:</strong> <span id="mLocation">—</span></p>
+        <p><strong>📐 المساحة:</strong> <span id="mArea">—</span></p>
+        <p><strong>الوصف:</strong> <span id="mDesc">—</span></p>
+        <div class="chips" id="mFeatures"></div>
+        <p class="modal__price"><strong>السعر:</strong> <span id="mPrice">—</span></p>
+        <div class="modal__actions">
+          <a id="mCall" class="buttons btn-call" href="#" target="_blank">📞 اتصال</a>
+          <a id="mWa" class="buttons btn-wa" href="#" target="_blank">💬 واتساب</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const modal=document.getElementById('detailsModal');
+      const img=document.getElementById('mImage');
+      const title=document.getElementById('mTitle');
+      const loc=document.getElementById('mLocation');
+      const area=document.getElementById('mArea');
+      const desc=document.getElementById('mDesc');
+      const price=document.getElementById('mPrice');
+      const chips=document.getElementById('mFeatures');
+      const call=document.getElementById('mCall');
+      const wa=document.getElementById('mWa');
+
+      function openFromCard(card){
+        const d=card.dataset;
+        title.textContent=d.title||'—';
+        loc.textContent=d.location||'—';
+        area.textContent=d.area||'—';
+        desc.textContent=d.desc||'—';
+        price.textContent=d.price||'—';
+        img.src=d.image||''; img.alt=d.title||'صورة العقار';
+        chips.innerHTML='';
+        (d.features||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(f=>{
+          const span=document.createElement('span');
+          span.className='chip';
+          span.textContent=f;
+          chips.appendChild(span);
+        });
+        const phone=(d.phone||'').replace(/\s+/g,'');
+        if(phone){
+          call.href=`tel:${phone}`;
+          wa.href=`https://wa.me/${phone.replace('+','')}`;
+          call.style.display='inline-block';
+          wa.style.display='inline-block';
+        } else {
+          call.style.display='none';
+          wa.style.display='none';
+        }
+        modal.style.display='block';
+        modal.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+      }
+      function closeModal(){
+        modal.style.display='none';
+        modal.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+      }
+      document.querySelectorAll('.property-card .btn-details').forEach(btn=>{
+        btn.addEventListener('click',e=>{
+          e.preventDefault();
+          const card=btn.closest('.property-card');
+          if(card) openFromCard(card);
+        });
+      });
+      document.addEventListener('click',e=>{
+        if(e.target.classList.contains('btn-close') || e.target.classList.contains('modal')) closeModal();
+      });
+      document.addEventListener('keydown',e=>{
+        if(e.key==='Escape') closeModal();
+      });
+    })();
+  </script>
+</body>
+</html>

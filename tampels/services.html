@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>خدماتنا | كيان القصور</title>
+      <link rel="icon" href="images/logo.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: url('images/bg2.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    nav {
+      background-color: rgba(0, 60, 116, 0.95);
+      padding: 15px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+   nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap; /* منع التفاف العناصر */
+  overflow-x: auto;   /* تمكين تمرير أفقي إن لزم */
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none; /* إخفاء التمرير في فايرفوكس */
+}
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    .hero-section {
+      background: url('images/logo-full.png') no-repeat center center;
+      background-size: contain;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-section img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .intro-box {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .intro-box h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #ffcc00;
+    }
+
+    .intro-box p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #f1f1f1;
+    }
+
+    .services-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .service-card {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 320px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .service-card h3 {
+      color: #ffcc00;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .service-card p {
+      font-size: 16px;
+      color: #eaeaea;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .intro-box h2 {
+        font-size: 28px;
+      }
+      .service-card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط التنقل -->
+  <nav>
+    <ul>
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="about.html">من نحن</a></li>
+      <li><a href="services.html">خدماتنا</a></li>
+      <li><a href="https://www.notion.so/24c382cd612b803c8819f1d72effc932?v=24c382cd612b80828c7d000cbd7eaf92&source=copy_link">عروضنا</a></li>
+      <li><a href="contact.html">تواصل معنا</a></li>
+    </ul>
+  </nav>
+
+  <!-- الشعار -->
+  <section class="hero-section">
+    <img src="images/header.jpg" alt="شعار كيان القصور">
+  </section>
+
+  <!-- المقدمة -->
+  <div class="intro-box">
+    <h2>خدماتنا</h2>
+    <p>نقدم في كيان القصور مجموعة متكاملة من الخدمات العقارية التي تلبي احتياجات عملائنا في السوق السعودي.</p>
+  </div>
+
+  <!-- كروت الخدمات -->
+  <section class="services-grid">
+
+    <div class="service-card">
+      <h3>الاستشارات العقارية</h3>
+      <p>نقدم استشارات متخصصة في جميع جوانب السوق العقاري، بما في ذلك الشراء، البيع، الإيجار، والاستثمار.</p>
+    </div>
+
+    <div class="service-card">
+      <h3>إدارة الأملاك</h3>
+      <p>ندير العقارات نيابة عن الملاك بما يشمل التحصيل، الصيانة، العقود، وخدمة العملاء لتقليل الجهد وزيادة العائد الشهري.</p>
+    </div>
+
+     <div class="service-card">
+      <h3>المقاولات العامة</h3>
+      <p>تشمل جميع مراحل البناء من التصميم وحتى التسليم النهائي.
+    مثل ترميم الوحدات السكنية والغير سكنية، التشطيبات الداخلية والخارجية، الدهانات، الأرضيات، تركيب الأسقف، والديكورات، بالإضافة إلى أعمال السباكة والكهرباء.
+    نحن نلتزم بالمواعيد المحددة ونوفر مواد بناء عالية الجودة لضمان رضا عملائنا وتحقيق أعلى معايير السلامة والجمال.
+  </p>
+    </div>
+
+
+    <div class="service-card">
+      <h3>التقييم العقاري</h3>
+      <p>نوفر تقارير تقييم احترافية تعتمد على معايير السوق السعودي والعالمي، باستخدام أدوات تحليل دقيقة وحديثة.</p>
+    </div>
+
+    <div class="service-card">
+      <h3>التصميم الداخلي والديكور</h3>
+      <p>نقدم استشارات وتصميمات عصرية للمساحات الداخلية بما يناسب ذوق العميل واحتياجات السوق العقاري.</p>
+    </div>
+
+    <div class="service-card">
+      <h3>التوثيق القانوني</h3>
+      <p>فريقنا يضمن سلامة جميع الإجراءات القانونية المتعلقة بعمليات البيع، الإيجار، والنقل، مع متابعة دقيقة لضمان الحقوق.</p>
+    </div>
+
+  </section>
+
+</body>
+</html>
+
+
